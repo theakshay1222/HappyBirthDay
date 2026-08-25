@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A premium interactive birthday surprise — a love story told in light, music and memories." />
+  <meta name="theme-color" content="#2a1230" />
+  <title>Happy Birthday ❤️ — A Surprise For You</title>
+
+  <!-- Elegant typography (falls back gracefully when offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+</head>
+<body>
+
+  <!-- Ambient floating background (hearts, petals, fireflies…) -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ══════════════ LOADING SCREEN ══════════════ -->
+  <div id="loader" class="loader" role="status" aria-live="polite">
+    <div class="loader-inner">
+      <div class="loader-heart"><span>❤</span></div>
+      <p class="loader-text">Preparing Something Beautiful…</p>
+      <div class="loader-bar"><span id="loaderFill"></span></div>
+      <p class="loader-percent" id="loaderPercent">0%</p>
+      <div class="loader-sparkles" aria-hidden="true"><i>✦</i><i>✧</i><i>✦</i><i>✧</i><i>✦</i></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ WELCOME SCREEN ══════════════ -->
+  <section id="welcome" class="welcome" aria-label="Welcome">
+    <div class="welcome-floaters" id="welcomeFloaters" aria-hidden="true"></div>
+    <div class="welcome-content">
+      <p class="welcome-eyebrow reveal-in">✦ &nbsp;A Little Surprise Awaits&nbsp; ✦</p>
+      <h1 class="welcome-title" id="welcomeTitle">Happy Birthday</h1>
+      <div class="welcome-heart" aria-hidden="true">❤️</div>
+      <h2 class="welcome-name" id="welcomeName">My LoveAmbika</h2>
+      <p class="welcome-tagline">“I made something special just for you.”</p>
+      <button id="openSurprise" class="btn-luxury" type="button">
+        <span class="btn-text">Open My Surprise</span>
+        <span class="btn-emoji" aria-hidden="true">🎁</span>
+        <span class="btn-ripple" aria-hidden="true"></span>
+      </button>
+      <p class="welcome-hint">🎧 best experienced with sound on</p>
+    </div>
+    <div class="welcome-vignette" aria-hidden="true"></div>
+  </section>
+
+  <!-- ══════════════ MAIN EXPERIENCE ══════════════ -->
+  <main id="main" class="main" hidden>
+
+    <!-- HERO -->
+    <section id="hero" class="hero" aria-label="Hero photo">
+      <div class="hero-rays" aria-hidden="true"></div>
+      <figure class="hero-frame reveal">
+        <div class="hero-frame-glow" aria-hidden="true"></div>
+        <img src="assets/photos/hero.jpg" alt="A portrait full of love" id="heroPhoto" />
+        <span class="hero-corner tl" aria-hidden="true"></span>
+        <span class="hero-corner tr" aria-hidden="true"></span>
+        <span class="hero-corner bl" aria-hidden="true"></span>
+        <span class="hero-corner br" aria-hidden="true"></span>
+      </figure>
+      <div class="hero-caption reveal">
+        <h2>To the most wonderful person in the world</h2>
+        <p>Every pixel of this page was made with you in my heart.</p>
+      </div>
+      <a class="scroll-hint" href="#wishes" aria-label="Scroll down"><span></span></a>
+    </section>
+
+    <!-- BIRTHDAY WISHES -->
+    <section id="wishes" class="section wishes-section" aria-label="Birthday wishes">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">a few words from the heart</p>
+        <h2 class="section-title">Birthday Wishes</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+      <div class="wish-grid" id="wishGrid"><!-- cards injected --></div>
+    </section>
+
+    <!-- ROMANTIC LETTER (ENVELOPE) -->
+    <section id="letter" class="section letter-section" aria-label="A letter for you">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">sealed with a kiss</p>
+        <h2 class="section-title">A Letter For You</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+
+      <div class="envelope-stage reveal">
+        <div class="envelope" id="envelope">
+          <div class="env-back" aria-hidden="true"></div>
+          <div class="env-letter" id="envLetter" aria-hidden="true">
+            <div class="env-letter-inner">
+              <span class="script">For you…</span>
+            </div>
+          </div>
+          <div class="env-front" aria-hidden="true"></div>
+          <div class="env-flap" id="envFlap" aria-hidden="true"></div>
+          <button class="env-seal" id="sealBtn" type="button" aria-label="Break the seal and open the letter">
+            <span>❤</span>
+          </button>
+        </div>
+        <p class="tap-hint" id="envHint">tap the wax seal to open</p>
+      </div>
+
+      <article class="letter-paper" id="letterPaper" hidden>
+        <div class="paper-texture" aria-hidden="true"></div>
+        <h3 class="script" id="letterHeading">My Dearest,</h3>
+        <p class="letter-body"><span id="typewriter"></span><span class="tw-caret" id="twCaret"></span></p>
+        <p class="letter-sign script" id="letterSign">— forever yours ❤</p>
+      </article>
+    </section>
+
+    <!-- MEMORY TIMELINE -->
+    <section id="timeline" class="section timeline-section" aria-label="Our story timeline">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">every moment with you</p>
+        <h2 class="section-title">Our Story</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+      <div class="timeline" id="timelineList"><!-- items injected --></div>
+    </section>
+
+    <!-- PHOTO GALLERY -->
+    <section id="gallery" class="section gallery-section" aria-label="Photo gallery">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">captured forever</p>
+        <h2 class="section-title">Our Moments</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+      <div class="gallery-grid" id="galleryGrid"><!-- polaroids injected --></div>
+    </section>
+
+    <!-- BIRTHDAY CAKE -->
+    <section id="cake" class="section cake-section" aria-label="Birthday cake">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">close your eyes…</p>
+        <h2 class="section-title">Make a Wish</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+
+      <div class="cake-stage reveal">
+        <div class="cake" id="cakeEl">
+          <div class="candles" id="candles">
+            <div class="candle"><i class="wick"></i><i class="flame"></i><i class="smoke"></i></div>
+            <div class="candle"><i class="wick"></i><i class="flame"></i><i class="smoke"></i></div>
+            <div class="candle"><i class="wick"></i><i class="flame"></i><i class="smoke"></i></div>
+            <div class="candle"><i class="wick"></i><i class="flame"></i><i class="smoke"></i></div>
+            <div class="candle"><i class="wick"></i><i class="flame"></i><i class="smoke"></i></div>
+          </div>
+          <div class="tier tier-3"><span class="icing"></span></div>
+          <div class="tier tier-2"><span class="icing"></span></div>
+          <div class="tier tier-1"><span class="icing"></span></div>
+          <div class="plate"></div>
+        </div>
+        <button id="blowBtn" class="btn-luxury" type="button">
+          <span class="btn-text">Blow the Candles</span>
+          <span class="btn-emoji" aria-hidden="true">🎂</span>
+        </button>
+        <div class="cake-message" id="cakeMessage" aria-live="polite">
+          <span class="hb">🎉 Happy Birthday! 🎉</span>
+          <span class="hb-sub">May every wish you make come true</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIFT BOX -->
+    <section id="gift" class="section gift-section" aria-label="A gift for you">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">wrapped with love</p>
+        <h2 class="section-title">One More Thing…</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+
+      <div class="gift-stage reveal">
+        <button class="gift" id="giftBox" type="button" aria-label="Open the gift">
+          <span class="gift-lid" aria-hidden="true"><i class="ribbon-v"></i><i class="bow"><b></b><b></b></i></span>
+          <span class="gift-body" aria-hidden="true"><i class="ribbon-v"></i></span>
+          <span class="gift-glow" aria-hidden="true"></span>
+        </button>
+        <p class="tap-hint" id="giftHint">tap the gift to open it</p>
+        <div class="gift-message" id="giftMessage" hidden>
+          <div class="gift-card">
+            <span class="gift-card-icon" aria-hidden="true">💝</span>
+            <p id="giftSecretText">No gift could ever match what you give me every single day — your smile, your warmth, your love. You are my greatest present. Always.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOVE LETTER -->
+    <section id="love-letter" class="section love-letter-section" aria-label="Love letter">
+      <div class="paper reveal" id="lovePaper">
+        <div class="heart-stamp" aria-hidden="true"><span>❤</span><em>with love</em></div>
+        <h3 class="script paper-heading">My Dearest,</h3>
+        <div class="paper-lines" id="loveLetterLines"><!-- lines injected --></div>
+        <p class="script paper-sign">Forever &amp; always, yours ❤</p>
+      </div>
+    </section>
+
+    <!-- 100 REASONS -->
+    <section id="reasons" class="section reasons-section" aria-label="Reasons I love you">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">and counting…</p>
+        <h2 class="section-title">100 Reasons I Love You</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+
+      <div class="reason-deck reveal" id="reasonDeck">
+        <div class="reason-card" id="reasonCard">
+          <div class="reason-inner" id="reasonInner">
+            <span class="reason-heart" aria-hidden="true">❤</span>
+            <span class="reason-num" id="reasonNum">Reason #1</span>
+            <p class="reason-text" id="reasonText"></p>
+            <span class="reason-doodle" id="reasonDoodle" aria-hidden="true">🌹</span>
+          </div>
+        </div>
+        <p class="swipe-hint">swipe or use the arrows</p>
+      </div>
+      <div class="reason-nav reveal">
+        <button id="reasonPrev" class="nav-btn" type="button" aria-label="Previous reason">‹</button>
+        <span class="reason-counter" id="reasonCounter">1 / 100</span>
+        <button id="reasonNext" class="nav-btn" type="button" aria-label="Next reason">›</button>
+      </div>
+    </section>
+
+    <!-- LOVE COUPONS -->
+    <section id="coupons" class="section coupons-section" aria-label="Love coupons">
+      <header class="section-head reveal">
+        <p class="section-eyebrow">redeem anytime, no expiry</p>
+        <h2 class="section-title">Love Coupons</h2>
+        <div class="section-divider" aria-hidden="true"><i>❤</i></div>
+      </header>
+      <div class="coupon-grid" id="couponGrid"><!-- coupons injected --></div>
+    </section>
+
+    <!-- FINALE -->
+    <section id="finale" class="section finale-section" aria-label="Happy birthday finale">
+      <div class="finale-glow" aria-hidden="true"></div>
+      <div class="finale-content">
+        <button class="finale-heart" id="finaleHeart" type="button" aria-label="Birthday heart">❤️</button>
+        <h2 class="finale-title reveal">Happy Birthday ❤️</h2>
+        <h3 class="finale-name script reveal" id="finaleName">My Love Ambika</h3>
+        <div class="finale-lines reveal" id="finaleLines"><!-- lines injected --></div>
+        <p class="finale-love reveal">I Love You Forever ❤️</p>
+        <p class="finale-hint" id="finaleHint">psst… keep tapping the heart</p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>made with all my ❤ — just for you</p>
+    </footer>
+  </main>
+
+  <!-- FX overlay (confetti, fireworks, hearts…) -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- PHOTO LIGHTBOX -->
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lb-backdrop" id="lbBackdrop"></div>
+    <button class="lb-close" id="lbClose" type="button" aria-label="Close">×</button>
+    <button class="lb-arrow lb-prev" id="lbPrev" type="button" aria-label="Previous photo">‹</button>
+    <figure class="lb-figure">
+      <img id="lbImg" src="" alt="" />
+      <figcaption id="lbCaption"></figcaption>
+    </figure>
+    <button class="lb-arrow lb-next" id="lbNext" type="button" aria-label="Next photo">›</button>
+  </div>
+
+  <!-- SECRET MODAL (easter egg) -->
+  <div class="secret-modal" id="secretModal" hidden role="dialog" aria-modal="true" aria-label="A secret for you">
+    <div class="secret-backdrop" id="secretBackdrop"></div>
+    <div class="secret-card">
+      <img src="assets/photos/secret.jpg" alt="A secret photo, just for you" />
+      <p class="script">You found my secret!</p>
+      <p id="secretText">If you're reading this, you just proved what I already knew — you notice the little things. That's one of the million reasons I love you. ❤</p>
+      <button class="btn-luxury small" id="secretClose" type="button"><span class="btn-text">Close with a kiss 💋</span></button>
+    </div>
+  </div>
+
+  <!-- Hidden easter-egg heart -->
+  <button class="hidden-heart" id="hiddenHeart" type="button" aria-label="A hidden heart">❤</button>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Floating love note (easter egg) -->
+  <button class="love-note" id="loveNote" type="button" hidden>💌</button>
+
+  <!-- Mini surprise gift (easter egg) -->
+  <button class="mini-gift" id="miniGift" type="button" hidden>🎁</button>
+
+  <!-- Background music -->
+  <audio id="bgm" loop preload="auto">
+    <source src="assets/music/birthday-melody.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
